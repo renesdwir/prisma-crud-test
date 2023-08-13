@@ -36,6 +36,15 @@ app.post("/products", async (req, res) => {
     console.log(error);
   }
 });
+app.delete("/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await prisma.product.delete({ where: { id } });
+    res.send({ message: "delete data successfullt", data: product });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
