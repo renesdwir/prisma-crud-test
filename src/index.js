@@ -45,6 +45,22 @@ app.delete("/products/:id", async (req, res) => {
     console.log(error);
   }
 });
+app.put("/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, price, description, image } = req.body;
+    if (!(name && price && description && image)) {
+      return res.status(400).send({ message: "Some fields are missing" });
+    }
+    const product = await prisma.product.update({
+      where: { id },
+      data: { name, price, description, image },
+    });
+    res.send({ message: "update data successfully", data: product });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
