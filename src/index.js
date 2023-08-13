@@ -24,6 +24,19 @@ app.get("/products", async (req, res) => {
   }
 });
 
+app.post("/products", async (req, res) => {
+  try {
+    const { name, price, description, image } = req.body;
+
+    const product = await prisma.product.create({
+      data: { name, price, description, image },
+    });
+    res.send({ message: "create data successfully", data: product });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
