@@ -23,6 +23,15 @@ app.get("/products", async (req, res) => {
     console.log(error);
   }
 });
+app.get("/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const products = await prisma.product.findUnique({ where: { id } });
+    res.send(products);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 app.post("/products", async (req, res) => {
   try {
@@ -75,7 +84,6 @@ app.patch("/products/:id", async (req, res) => {
     console.log(error);
   }
 });
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
